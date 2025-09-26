@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <py-script>
+            import shoppingsytem
+            import sqlite3 
+
+            items =[]
+            prices=[]
+            total = 0
+            def search_products(item):
+                conn = sqlite3.connect(r'C:\Users\Keke\Documents\projects\shoppingsystem\productsdatabase.db')
+                cursor = conn.cursor()
+                
+                search_term = item
+                cursor.execute("SELECT * FROM PRODUCTS WHERE productName LIKE ?", ('%' + search_term + '%',))
+                results = cursor.fetchall()
+                if results:
+                    print("Search Results:")
+                    for row in results:
+                        print(f"ID: {row[0]}, Name: {row[1]}, Price: {row[2]}")          
+                else:
+                    print("No products found.")
+
+                conn.close()
+                return results;
+
+            while True :
+                item = input("enter item: ")
+                if item.lower() == "q" :
+                    break  
+                else :
+                        products = search_products(item)
+                        if products:
+                            selected = products[0]  # use the first matched product
+                            items.append(selected[1])  # product name
+                            price = float(selected[2])  # product price
+                            prices.append(price)
+                            total += price
+                            
+            Moneypaid = float(input("enter amount paid: R"))
+                        
+            change = Moneypaid - total;
+            print("change:{change}")
+            shoppingsytem.change(change)
+            print("-----------YOUR CART-------------")
+
+            for item, price in zip(items, prices):
+                print(f"{item} - R{price}")   
+            print()
+            print(f"total Cost: R{total}")
+
+            print(f"amount issuid: R{Moneypaid}")
+
+            print(f"change : R{change}")
+        </py-script>
+    </body>
+</html>
