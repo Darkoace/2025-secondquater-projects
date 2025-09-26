@@ -1,4 +1,4 @@
-import shoppingsytem
+import shoppingsysm
 
 items =[]
 prices=[]
@@ -22,4 +22,4 @@ for price in prices:
     
 print()
 print(f"your total is: R{total}")
-shoppingsytem.change(total)
+shoppingsysm.change(total)
